@@ -1,0 +1,24 @@
+ syntax = "proto3";
+package api;
+ option go_package = "backend-onboarding/api/proto";
+
+ service RechargeLogService {
+  rpc CreateRechargeLog (CreateRechargeRequest) returns (RechargeLogResponse);
+  //Allow user service can create with more create recharge
+  rpc StreamRechargeLogs (stream CreateRechargeRequest) returns (stream RechargeLogResponse); // 👈 BiDi Stream
+}
+
+message CreateRechargeRequest {
+  string user_id = 1;
+  double amount = 2;
+  string remark = 3;
+}
+
+message RechargeLogResponse {
+  string recharge_id = 1;
+  string user_id = 2;
+  string user_nickname = 3;
+  double amount = 4;
+  string created_at = 5;
+  string remark = 6;
+}

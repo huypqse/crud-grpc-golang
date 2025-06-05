@@ -1,0 +1,22 @@
+ syntax = "proto3";
+ package api;
+ option go_package = "backend-onboarding/api/proto";
+
+ service UserService {
+  rpc GetUserById (GetUserRequest) returns (UserResponse);
+  //Recharge Service want to take users with a lot of ids
+  rpc GetUsersStream (UserIdsRequest) returns (stream UserResponse); // 👈 Stream
+}
+
+message GetUserRequest {
+  string user_id = 1;
+}
+
+message UserIdsRequest {
+  repeated string user_ids = 1; // input: list of IDs
+}
+
+message UserResponse {
+  string user_id = 1;
+  string nickname = 2;
+}
